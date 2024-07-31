@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:replace="~{include/top}"></div>
+	<section>
+		<br>
+		<div align="center">
+			<h2>방명록 목록보기</h2>
+		</div>
+		<div align="center">
+
+			1.페이지 사이즈 [[${pageSize}]] 2.페이지 리스트 사이즈[[${pageListSize}]]
+			3.전체레코드수[[${totalCount}]] 4.총 페이지 수 [[${totalPage}]] 5.현재레코드
+			[[${start}]] 6.현재 페이지 [[${currentPage}]] 7.하단 가로 시작
+			[[${listStartPage}]] 8.하단 가로 끝[[${listEndPage}]]
+
+			<table border=1 width=700>
+				<tr align="center">
+					<td>rownum</td>
+					<td>rnum</td>
+					<td>이름</td>
+					<td>나이</td>
+					<td>메모</td>
+					<td>날짜(String형)</td>
+				</tr>
+
+				<tr th:each="m, mStat: ${li} " align="center">
+					<td th:text="${m.rownum}" />
+					<td th:text="${m.rnum}" />
+					<td th:text="${m.name}" />
+					<td th:text="${m.age}" />
+					<td th:text="${m.memo}" />
+					<td th:text="${m.regdate}" />
+				</tr>
+			</table>
+			<a th:href="@{/guestBook/list(start=1, ch1=${ch1}, ch2=${ch2})}">처음페이지</a>
+
+
+
+
+			<th:block th:if="${listStartPage > pageListSize}"
+				th:with="start=${(listStartPage - pageListSize - 1) * pageSize + 1}">
+				<a th:href="@{/guestBook/list(start=${start}, ch1=${ch1}, ch2=${ch2})}"
+					th:text="'이전10페이지'"></a>
+			</th:block>
+
+			<a th:href="@{/guestBook/list(start=${currentPage == 1  ? 1 : (currentPage - 2) * pageSize + 1},
+ 			ch1=${ch1}, ch2=${ch2})}">◀</a>
+
+			<th:block th:each="i : ${#numbers.sequence(listStartPage, listEndPage)}"
+				th:with="start=${(i - 1) * pageSize + 1}">
+				<th:block th:if="${i <= totalPage}">
+        [<a th:href="@{/guestBook/list(start=${start}, ch1=${ch1}, ch2=${ch2})}" th:text="${i}"></a>]
+    </th:block>
+			</th:block>
+
+			<a th:href="@{/guestBook/list(start=${currentPage == totalPage ? (totalPage - 1) * pageSize + 1 : currentPage * pageSize +1},
+ ch1=${ch1}, ch2=${ch2})}">▶</a>
+
+			<th:block th:if="${listEndPage < totalPage}"
+				th:with="start=${(listStartPage + pageListSize - 1) * pageSize + 1}">
+				<a th:href="@{/guestBook/list(start=${start}, ch1=${ch1}, ch2=${ch2})}"
+				th:text="'다음10페이지'"></a>
+			</th:block>
+
+			<a th:href="@{/guestBook/list(start=${(totalPage - 1) * pageSize + 1}, ch1=${ch1}, ch2=${ch2})}">마지막페이지</a>
+		</div>
+		<br>
+		<div align="center">
+
+			<form action="/guestBook/list">
+				<select name=ch1>
+					<option value="name">name</option>
+					<option value="memo">memo</option>
+				</select> <input type=text name="ch2"> <input type=submit
+					value="검색하기">
+			</form>
+		</div>
+	</section>
+
+	<div th:replace="~{include/bottom::footer}"></div>
+</body>
+</html>

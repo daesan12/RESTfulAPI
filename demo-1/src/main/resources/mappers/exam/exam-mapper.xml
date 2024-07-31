@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.exam.ExamDao">
+
+	<select id="ExamList"
+		parameterType="com.example.exam.ExamVO"
+		resultType="com.example.exam.ExamVO">
+		
+		select sNo, sName, kor,eng,math,hist from examtbl
+	
+	</select>
+
+</mapper>

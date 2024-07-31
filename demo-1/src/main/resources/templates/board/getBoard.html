@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>상세보기</title>
+</head>
+<body>
+	<div th:replace="~{include/top}"></div>
+	
+	<script th:inline="javascript">
+	function BoardDelete(k){
+		alert(k)
+	}
+	
+	</script>
+	<section>
+		<br>
+		<div align="center">
+			<h2>상세보기</h2>
+		</div>
+		<div align="center">
+			<form name=f1 value="${m.idx}">
+				<table border="1">
+				<input type=hidden id="ckIDX" value="idx확인"  > 
+					<input type="hidden" name="idx" th:value="${m.idx}">
+					<tr>
+						<td>이름</td>
+						<td><input type="text" name="name" th:value="${m.name}"></td>
+					</tr>
+					<tr>
+						<td>나이</td>
+						<td><input type="text" name="age" th:value="${m.age}"></td>
+					</tr>
+					<tr>
+						<td>특이사항</td>
+						<td><textarea name="etc" cols="30" rows="4"
+								th:text="${m.etc}"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="reset"
+							value="다시쓰기"> <input type=submit value="수정하기"
+							onClick="JavaScript:f1.action='BoardUpdate'"> 
+							<input type=submit value="삭제하기"
+							th:onClick="JavaScript:f1.action='BoardDelete'"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<br>
+	</section>
+	<div th:replace="~{include/bottom::footer}"></div>
+</body>
+</html>
